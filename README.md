@@ -145,7 +145,3 @@ The application uses the dlib 68-point facial landmark predictor:
 3. Commit changes
 4. Push to branch
 5. Create Pull Request
-
-## License
-
-MIT License
