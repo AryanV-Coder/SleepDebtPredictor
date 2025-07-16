@@ -1,0 +1,32 @@
+*.streamlit/secrets.toml
+*.DS_Store
+*data_copy.json
+*improvements.txt
+venv/
+sleepdebtpredictor-415b8-eb05f2a06cd0.json
+__pycache__/
+uploaded_videos/
+.vscode
+.env
+
+# Large Model Files
+*.dat
+*.model
+*.pkl
+*.joblib
+shape_predictor_68_face_landmarks.dat
+
+# Additional Python files
+*.pyc
+*.pyo
+*.pyd
+*.so
+
+# Additional IDE files
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/

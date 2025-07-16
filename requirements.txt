@@ -1,0 +1,10 @@
+google-generativeai
+fastapi
+uvicorn
+python-dotenv
+gspread 
+oauth2client
+dlib
+opencv-python
+numpy
+python-multipart

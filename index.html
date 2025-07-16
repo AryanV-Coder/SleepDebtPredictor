@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Debt Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sleep Debt Calculator</h1>
+        </header>
+        
+        <main>
+            <!-- Video Section -->
+            <div class="video-section">
+                <div class="video-container">
+                    <video id="videoElement" autoplay muted playsinline></video>
+                    <div class="video-overlay" id="videoOverlay">
+                        <!-- Empty overlay, video feed will show when active -->
+                    </div>
+                </div>
+                
+                <button id="startBtn" class="start-btn">Start</button>
+                
+                <!-- Timer Display -->
+                <div class="timer" id="timer" style="display: none;">30</div>
+                
+                <div class="status-message" id="statusMessage">
+                    Video Data Sent Successfully to the model
+                </div>
+                
+                <!-- Text Area for FastAPI Response -->
+                <div class="response-area">
+                    <textarea id="responseText" readonly placeholder="Model Response will be shown here"></textarea>
+                </div>
+                
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
