@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 import json
 import re
-from blink_counter import count_blinks_in_video
+# from blink_counter import count_blinks_in_video
 
 # Load environment variables
 load_dotenv()
@@ -23,7 +23,7 @@ def ai_analysis(encoded_video):
     Returns:
         dict: Parsed JSON response from AI model
     """
-    blink_count = count_blinks_in_video(encoded_video)
+    # blink_count = count_blinks_in_video(encoded_video)
 
     # System prompt for sleep analysis
     system_prompt = """
@@ -39,11 +39,9 @@ def ai_analysis(encoded_video):
         - 10 = extremely pronounced darkness and swelling.
         Analyze the under-eye region's shadow, color deviation from adjacent skin, and depth.
 
-    3. blink_count will be provided by me. Consider blink_count = """ + str(blink_count) + """.
-
-    4. yawn_count — Count the number of visible yawns. A yawn is defined as an open-mouth facial gesture     
+    3. yawn_count — Count the number of visible yawns. A yawn is defined as an open-mouth facial gesture     
     
-    5. sleep_debt — Based on the above four indicators (eye_redness, dark_circles, blink_count, yawn_count), 
+    4. sleep_debt — Based on the above four indicators (eye_redness, dark_circles, yawn_count), 
         estimate the number of additional hours of sleep the person needs. This should be a realistic number 
         (e.g., between 0 and 10), derived from visual signs of sleep deprivation. number 
         (e.g., between 0 and 10), derived from visual signs of sleep deprivation.
@@ -53,7 +51,6 @@ def ai_analysis(encoded_video):
     {
       "eye_redness": <0–10>,
       "dark_circles": <0–10>,
-      "blink_count": <integer>,
       "yawn_count": <integer>,
       "sleep_debt": <integer>
     }
@@ -63,7 +60,6 @@ def ai_analysis(encoded_video):
     {
       "eye_redness": 0,
       "dark_circles": 0,
-      "blink_count": 0,
       "yawn_count": 0,
       "sleep_debt": 0
     }
@@ -112,7 +108,6 @@ def ai_analysis(encoded_video):
         return {
             "eye_redness": 0,
             "dark_circles": 0,
-            "blink_count": 0,
             "yawn_count": 0,
             "sleep_debt": 0,
         }
@@ -150,7 +145,6 @@ def parse_json_response(response_text):
             return {
                 "eye_redness": 0,
                 "dark_circles": 0,
-                "blink_count": 0,
                 "yawn_count": 0,
                 "sleep_debt": 0,
             }

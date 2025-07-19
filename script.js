@@ -16,7 +16,7 @@ let countdown;
 let timeLeft = 30;
 
 // FastAPI Configuration
-const API_BASE_URL = 'http://127.0.0.1:8000' ;
+const API_BASE_URL = 'https://sleepdebtpredictor.onrender.com' ;
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
