@@ -27,7 +27,7 @@ def ai_analysis(encoded_video):
 
     # System prompt for sleep analysis
     system_prompt = """
-    Analyze the provided 30-second video of a human subject and extract the following visual fatigue features:
+    Analyze the provided 15-second video of a human subject and extract the following visual fatigue features:
 
     1. eye_redness — Score the visible redness in the sclera (white region of both eyes) on a scale from 0 to 10, where:
         - 0 = no redness (clear white),
