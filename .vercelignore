@@ -1,0 +1,14 @@
+# Python backend files (not needed for frontend)
+main.py
+ai_analysis.py
+backend.py
+blink_counter.py
+google_sheets.py
+requirements.txt
+download_model.py
+start.sh
+*.dat
+*.json
+__pycache__/
+uploaded_videos/
+venv/
