@@ -44,7 +44,7 @@ async def analyse_sleep(video: UploadFile):
         
         # Return successful response
         response = {
-            'sleep_debt': 'Thank You for your input in training this model.',  # Your ML result here
+            'sleep_debt': 'Thank You for your input in training this model 😊',  # Your ML result here
         }
         
         return response

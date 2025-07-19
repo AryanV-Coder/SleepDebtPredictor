@@ -13,7 +13,7 @@ let recordedChunks = [];
 let stream;
 let isRecording = false;
 let countdown;
-let timeLeft = 15;
+let timeLeft = 10;
 
 // FastAPI Configuration
 const API_BASE_URL = 'https://sleepdebtpredictor.onrender.com' ;
@@ -229,7 +229,7 @@ function resetUIForNewAnalysis() {
     }
     
     // Reset timer value
-    timeLeft = 15;
+    timeLeft = 10;
     
     // Hide status
     hideStatus();
@@ -257,7 +257,7 @@ function updateUIForRecording() {
     if (timer) {
         timer.style.display = 'flex';
         timer.classList.add('recording');
-        timer.textContent = '15';
+        timer.textContent = '10';
     }
     
     showStatus('Recording in progress... Please stay in frame', 'recording');
@@ -268,7 +268,7 @@ function updateUIForRecording() {
 // Countdown timer
 function startCountdown() {
     console.log('⏱️ Starting countdown timer');
-    timeLeft = 15;
+    timeLeft = 10;
     if (timer) timer.textContent = timeLeft;
     
     countdown = setInterval(() => {
@@ -344,7 +344,7 @@ async function sendVideoToAPI(videoBlob) {
             } else if (result.results) {
                 resultsText = result.results;
             } else {
-                resultsText = 'Analysis completed successfully';
+                resultsText = 'Analysis completed successfully 🎉';
             }
             
             displayResults(resultsText);
