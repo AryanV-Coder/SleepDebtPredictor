@@ -35,7 +35,7 @@ function speakText(text, options = {}) {
     currentUtterance = new SpeechSynthesisUtterance(text);
     
     // Configure voice options for better Hinglish pronunciation
-    currentUtterance.rate = options.rate || 0.8;        // Slower for better clarity
+    currentUtterance.rate = options.rate || 0.6;        // Much slower for better clarity and Indian pace
     currentUtterance.pitch = options.pitch || 1.1;      // Slightly higher pitch
     currentUtterance.volume = options.volume || 0.9;    // Higher volume
     
@@ -43,31 +43,16 @@ function speakText(text, options = {}) {
     const voices = speechSynthesis.getVoices();
     console.log('🎤 Available voices:', voices.map(v => `${v.name} (${v.lang})`));
     
-    // Priority order for better Hinglish pronunciation
+    // Only Indian English voices for Hinglish output
     const voicePreferences = [
-        // Indian English voices (best for Hinglish)
-        v => v.name.toLowerCase().includes('ravi') && v.lang.includes('en-IN'),
-        v => v.name.toLowerCase().includes('indian') && v.lang.includes('en'),
         v => v.lang === 'en-IN',
-        
-        // British English voices (better than American for Indian accent)
-        v => v.name.toLowerCase().includes('daniel') && v.lang.includes('en-GB'),
-        v => v.name.toLowerCase().includes('british') && v.lang.includes('en'),
-        v => v.lang === 'en-GB',
-        
-        // High quality American voices
-        v => v.name.toLowerCase().includes('alex'),
-        v => v.name.toLowerCase().includes('samantha'),
-        v => v.name.toLowerCase().includes('victoria'),
-        
-        // Female voices (often clearer)
-        v => v.name.toLowerCase().includes('karen'),
-        v => v.name.toLowerCase().includes('susan'),
-        v => v.name.toLowerCase().includes('fiona'),
-        
-        // Any English voice as fallback
-        v => v.lang.startsWith('en-'),
-        v => v.lang.includes('en')
+        v => v.lang.includes('en-IN'),
+        v => v.name.toLowerCase().includes('ravi') && v.lang.includes('en-IN'),
+        v => v.name.toLowerCase().includes('priya') && v.lang.includes('en-IN'),
+        v => v.name.toLowerCase().includes('indian') && v.lang.includes('en-IN'),
+        v => v.name.toLowerCase().includes('veena') && v.lang.includes('en-IN'),
+        v => v.name.toLowerCase().includes('aditi') && v.lang.includes('en-IN'),
+        v => v.name.toLowerCase().includes('aria') && v.lang.includes('en-IN')
     ];
     
     // Find the best available voice
@@ -517,7 +502,7 @@ async function sendVideoToAPI(videoBlob) {
                 // Small delay to ensure display is complete before audio
                 setTimeout(() => {
                     speakText(result.message, {
-                        rate: 0.9,
+                        rate: 0.6,        // Slower rate for Indian accent
                         pitch: 1,
                         volume: 0.8
                     });
