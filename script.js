@@ -43,16 +43,15 @@ function speakText(text, options = {}) {
     const voices = speechSynthesis.getVoices();
     console.log('🎤 Available voices:', voices.map(v => `${v.name} (${v.lang})`));
     
-    // Only Indian English voices for Hinglish output
+    // Only Hindi voices for Hindi output
     const voicePreferences = [
-        v => v.lang === 'en-IN',
-        v => v.lang.includes('en-IN'),
-        v => v.name.toLowerCase().includes('ravi') && v.lang.includes('en-IN'),
-        v => v.name.toLowerCase().includes('priya') && v.lang.includes('en-IN'),
-        v => v.name.toLowerCase().includes('indian') && v.lang.includes('en-IN'),
-        v => v.name.toLowerCase().includes('veena') && v.lang.includes('en-IN'),
-        v => v.name.toLowerCase().includes('aditi') && v.lang.includes('en-IN'),
-        v => v.name.toLowerCase().includes('aria') && v.lang.includes('en-IN')
+        v => v.lang === 'hi-IN',
+        v => v.lang.includes('hi-IN'),
+        v => v.name.toLowerCase().includes('hindi') && v.lang.includes('hi-IN'),
+        v => v.name.toLowerCase().includes('kumar') && v.lang.includes('hi-IN'),
+        v => v.name.toLowerCase().includes('neerja') && v.lang.includes('hi-IN'),
+        v => v.name.toLowerCase().includes('heera') && v.lang.includes('hi-IN'),
+        v => v.name.toLowerCase().includes('hemant') && v.lang.includes('hi-IN')
     ];
     
     // Find the best available voice

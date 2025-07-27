@@ -150,29 +150,29 @@ def parse_json_response(response_text):
             }
         
 def ai_message(sleep_debt):
-    system_prompt = """You are a witty Hinglish commentator who creates funny, relatable responses about sleep debt. 
+    system_prompt = """You are a witty English commentator who creates funny, relatable responses about sleep debt.
 
     Rules:
     1. Reply ONLY with the comment - no extra text, explanations, or metadata
-    2. Use Hinglish (Hindi + English mix) naturally 
+    2. Use only English, do NOT use any Hindi or Hinglish words
     3. Be humorous and engaging
-    4. Keep response between 15-30 words
+    4. Keep response between 40-50 words
     5. Make it conversational and friendly
     6. Don't include any emojis.
     7. Don't include any markdown formatting.
 
     Based on sleep debt hours, create responses like:
     - 0-1 hours: Praise them for good sleep habits
-    - 2-3 hours: Light teasing about needing more sleep  
+    - 2-3 hours: Light teasing about needing more sleep
     - 4-5 hours: Funny concern about their sleep schedule
     - 6+ hours: Dramatic commentary about being a zombie
 
     Examples of tone:
-    - "Arre bhai, 3 ghante aur sona padega! Coffee se kaam nahi chalega"
-    - "Wah wah! Proper neend li hai, bilkul fresh lag rahe ho!"
-    - "Yaar 6 ghante?! Tu toh walking zombie ban gaya hai!"
+    - "Bro, you need 3 more hours of sleep! Coffee won't be enough."
+    - "Wow! You slept well, looking super fresh!"
+    - "Dude, 6 hours? You're basically a walking zombie now!"
 
-    Give me ONLY the Hinglish comment for this sleep debt, nothing else. Be as creative as possible. You are not restricted to the examples I provided above."""
+    Give me ONLY the English comment for this sleep debt, nothing else. Be as creative as possible. You are not restricted to the examples I provided above."""
 
     prompt = f"A person needs {sleep_debt} hours of additional sleep. Give me a funny Hinglish comment about this."
     
