@@ -1,8 +1,8 @@
 import pickle
 
-with open("models/scaler.pkl",'rb') as file:
+with open("model_training/models/scaler.pkl",'rb') as file:
     scaler = pickle.load(file)
-with open("models/regression.pkl",'rb') as file:
+with open("model_training/models/regression.pkl",'rb') as file:
     regression = pickle.load(file)
 
 def predict_sleep_debt(**kwargs):
