@@ -7,6 +7,10 @@ const resultText = document.getElementById('resultText');
 const timer = document.getElementById('timer');
 const responseText = document.getElementById('responseText');
 
+// Text-to-Speech Setup
+let speechSynthesis = window.speechSynthesis;
+let currentUtterance = null;
+
 // Global Variables
 let mediaRecorder;
 let recordedChunks = [];
@@ -17,6 +21,59 @@ let timeLeft = 10;
 
 // FastAPI Configuration
 const API_BASE_URL = 'https://sleepdebtpredictor.onrender.com' ;
+
+// Text-to-Speech Function
+function speakText(text, options = {}) {
+    console.log('🔊 Converting text to speech:', text);
+    
+    // Stop any current speech
+    if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+    }
+    
+    // Create speech utterance
+    currentUtterance = new SpeechSynthesisUtterance(text);
+    
+    // Configure voice options
+    currentUtterance.rate = options.rate || 0.9;        // Speed (0.1 to 10)
+    currentUtterance.pitch = options.pitch || 1;        // Pitch (0 to 2)
+    currentUtterance.volume = options.volume || 0.8;    // Volume (0 to 1)
+    
+    // Try to use a specific voice (optional)
+    const voices = speechSynthesis.getVoices();
+    const preferredVoice = voices.find(voice => 
+        voice.name.includes('Alex') || 
+        voice.name.includes('Samantha') || 
+        voice.lang.includes('en-US')
+    );
+    if (preferredVoice) {
+        currentUtterance.voice = preferredVoice;
+    }
+    
+    // Event handlers
+    currentUtterance.onstart = () => {
+        console.log('🎵 Speech started');
+    };
+    
+    currentUtterance.onend = () => {
+        console.log('🎵 Speech ended');
+    };
+    
+    currentUtterance.onerror = (event) => {
+        console.error('❌ Speech error:', event.error);
+    };
+    
+    // Speak the text
+    speechSynthesis.speak(currentUtterance);
+}
+
+// Function to stop audio (if needed)
+function stopAudio() {
+    if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+        console.log('🔇 Audio stopped');
+    }
+}
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
@@ -335,19 +392,39 @@ async function sendVideoToAPI(videoBlob) {
             const result = await response.json();
             console.log('✅ API Response received:', result);
             
-            // Display results - NO RESET
-            let resultsText = '';
+            // Format the response for display (line by line)
+            let displayText = '';
+            if (result.eye_redness) {
+                displayText += result.eye_redness + '\n';
+            }
+            if (result.dark_circles) {
+                displayText += result.dark_circles + '\n';
+            }
+            if (result.yawn_count) {
+                displayText += result.yawn_count + '\n';
+            }
             if (result.sleep_debt) {
-                resultsText = result.sleep_debt;
-            } else if (result.message) {
-                resultsText = result.message;
-            } else if (result.results) {
-                resultsText = result.results;
-            } else {
-                resultsText = 'Analysis completed successfully 🎉';
+                displayText += result.sleep_debt + '\n';
             }
             
-            displayResults(resultsText);
+            // Remove trailing newline
+            displayText = displayText.trim();
+            
+            // Display results in text box
+            displayResults(displayText);
+            
+            // Play audio for the message (if exists)
+            if (result.message) {
+                console.log('🔊 Playing audio message:', result.message);
+                // Small delay to ensure display is complete before audio
+                setTimeout(() => {
+                    speakText(result.message, {
+                        rate: 0.9,
+                        pitch: 1,
+                        volume: 0.8
+                    });
+                }, 500);
+            }
             
             // Only enable start button - NO OTHER CHANGES
             if (startBtn) {
@@ -384,7 +461,7 @@ async function sendVideoToAPI(videoBlob) {
 function displayResults(resultsText) {
     console.log('📋 Displaying results - NO RESET LOGIC:', resultsText);
     
-    // Update response text area
+    // Update response text area (preserve line breaks)
     if (responseText) {
         responseText.value = resultsText;
         // ✅ Save to localStorage to persist across reloads
@@ -392,15 +469,15 @@ function displayResults(resultsText) {
         localStorage.setItem('sleepAnalysisTimestamp', Date.now().toString());
     }
     
-    // Update result text display
+    // Update result text display (convert \n to <br> for HTML display)
     if (resultText) {
-        resultText.textContent = resultsText;
+        resultText.innerHTML = resultsText.replace(/\n/g, '<br>');
         resultText.classList.add('show');
         resultText.style.display = 'block';
     }
     
-    // Show success status
-    showStatus('Analysis completed!', 'success');
+    // Show success status with audio indicator
+    showStatus('Analysis completed! 🔊 Playing audio...', 'success');
     
     // Keep timer visible at "0"
     if (timer) {
@@ -413,7 +490,7 @@ function displayResults(resultsText) {
         videoElement.style.display = 'block';
     }
     
-    console.log('✅ Results displayed - everything stays visible until Start pressed');
+    console.log('✅ Results displayed with audio - everything stays visible until Start pressed');
 }
 
 // Show status message
@@ -470,7 +547,8 @@ function restoreResponseFromStorage() {
                 responseText.value = savedResponse;
             }
             if (resultText) {
-                resultText.textContent = savedResponse;
+                // Convert \n to <br> for HTML display
+                resultText.innerHTML = savedResponse.replace(/\n/g, '<br>');
                 resultText.classList.add('show');
                 resultText.style.display = 'block';
             }

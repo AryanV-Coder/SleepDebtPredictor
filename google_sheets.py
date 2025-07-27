@@ -21,7 +21,7 @@ def save_to_google_sheet(data: dict):
         
         sheet.append_row(list(data.values()))
 
-        print("✅ Data saved to google drive")
+        print("✅ Data saved to google sheets")
 
     except FileNotFoundError:
         print("❌ ERROR: Service account JSON file not found")

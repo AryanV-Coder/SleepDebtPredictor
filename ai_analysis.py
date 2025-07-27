@@ -148,3 +148,68 @@ def parse_json_response(response_text):
                 "yawn_count": 0,
                 "sleep_debt": 0,
             }
+        
+def ai_response(sleep_debt):
+    system_prompt = """You are a witty Hinglish commentator who creates funny, relatable responses about sleep debt. 
+
+    Rules:
+    1. Reply ONLY with the comment - no extra text, explanations, or metadata
+    2. Use Hinglish (Hindi + English mix) naturally 
+    3. Be humorous and engaging
+    4. Keep response between 15-30 words
+    5. Make it conversational and friendly
+    6. Don't include any emojis.
+    7. Don't include any markdown formatting.
+
+    Based on sleep debt hours, create responses like:
+    - 0-1 hours: Praise them for good sleep habits
+    - 2-3 hours: Light teasing about needing more sleep  
+    - 4-5 hours: Funny concern about their sleep schedule
+    - 6+ hours: Dramatic commentary about being a zombie
+
+    Examples of tone:
+    - "Arre bhai, 3 ghante aur sona padega! Coffee se kaam nahi chalega"
+    - "Wah wah! Proper neend li hai, bilkul fresh lag rahe ho!"
+    - "Yaar 6 ghante?! Tu toh walking zombie ban gaya hai!"
+
+    Give me ONLY the Hinglish comment for this sleep debt, nothing else. Be as creative as possible. You are not restricted to the examples I provided above."""
+
+    prompt = f"A person needs {sleep_debt} hours of additional sleep. Give me a funny Hinglish comment about this."
+    
+    try:
+        # Generate AI response
+        response = model.generate_content([
+            {"role": "user", "parts": [{"text": system_prompt}]},
+            {"role": "user", "parts": [{"text": prompt}]}
+        ])
+        
+        # Clean the response - remove any potential extra formatting
+        comment = response.text.strip()
+        
+        # Remove quotes if AI adds them
+        comment = comment.strip('"').strip("'")
+        
+        # Remove any markdown formatting
+        comment = comment.replace('**', '').replace('*', '')
+        
+        print(f"AI Comment: {comment}")
+        return comment
+        
+    except Exception as e:
+        print(f"Error generating AI comment: {str(e)}")
+        
+        # Fallback responses based on sleep debt
+        fallback_comments = {
+            0: "Perfect! Bilkul sahi neend li hai, superstar!",
+            1: "Ek ghanta aur sona chahiye, almost perfect hai!", 
+            2: "Do ghante ki kami hai yaar, thoda aur rest karo! ",
+            3: "Teen ghante?! Arre coffee pe survive kar rahe ho kya? ",
+            4: "Char ghante ki kami! Tu toh half-zombie ban gaya hai bro!",
+            5: "Paanch ghante?! Yaar tu walking dead series mein audition de sakta hai!",
+        }
+        
+        # Get appropriate fallback or default for high values
+        if sleep_debt <= 5:
+            return fallback_comments[sleep_debt]
+        else:
+            return f"Arre {sleep_debt} ghante?! Tu toh completely zombie ho gaya hai yaar!"
