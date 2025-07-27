@@ -35,7 +35,7 @@ function speakText(text, options = {}) {
     currentUtterance = new SpeechSynthesisUtterance(text);
     
     // Configure voice options for better English pronunciation
-    currentUtterance.rate = options.rate || 1.3;        // Slightly faster for English
+    currentUtterance.rate = options.rate || 1.5;        // Much faster for English
     currentUtterance.pitch = options.pitch || 1.5;      // Slightly above normal
     currentUtterance.volume = options.volume || 0.9;     // Higher volume
 
@@ -70,6 +70,11 @@ function speakText(text, options = {}) {
         v => v.name.toLowerCase().includes('alex') && v.lang.includes('en-US'),
         v => v.name.toLowerCase().includes('samantha') && v.lang.includes('en-US'),
         v => v.name.toLowerCase().includes('victoria') && v.lang.includes('en-US'),
+        v => v.name.toLowerCase().includes('google us english') && v.lang.includes('en-US'),
+        v => v.name.toLowerCase().includes('jenny') && v.lang.includes('en-US'),
+        v => v.name.toLowerCase().includes('guy') && v.lang.includes('en-US'),
+        v => v.name.toLowerCase().includes('en-us-wavenet') && v.lang.includes('en-US'),
+        v => v.name.toLowerCase().includes('en-us-neural') && v.lang.includes('en-US'),
 
         // Any English voice as fallback
         v => v.lang.startsWith('en-'),
