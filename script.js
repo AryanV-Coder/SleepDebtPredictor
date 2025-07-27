@@ -35,8 +35,8 @@ function speakText(text, options = {}) {
     currentUtterance = new SpeechSynthesisUtterance(text);
     
     // Configure voice options for better English pronunciation
-    currentUtterance.rate = options.rate || 1.05;        // Slightly faster for English
-    currentUtterance.pitch = options.pitch || 1.05;      // Slightly above normal
+    currentUtterance.rate = options.rate || 1.3;        // Slightly faster for English
+    currentUtterance.pitch = options.pitch || 1.5;      // Slightly above normal
     currentUtterance.volume = options.volume || 0.9;     // Higher volume
 
     // Get available voices and find the best one for English
