@@ -43,7 +43,8 @@ function speakText(text, options = {}) {
     const voices = speechSynthesis.getVoices();
     console.log('🎤 Available voices:', voices.map(v => `${v.name} (${v.lang})`));
 
-    let selectedVoice = voices.find(v => v.name.toLowerCase() === 'good news' && v.lang === 'en-US');
+    // Try to match 'Good News' voice name case-insensitively and ignore extra spaces
+    let selectedVoice = voices.find(v => v.name.replace(/\s+/g, '').toLowerCase() === 'goodnews' && v.lang === 'en-US');
     if (selectedVoice) {
         console.log(`🎯 Forced voice: ${selectedVoice.name} (${selectedVoice.lang})`);
         currentUtterance.voice = selectedVoice;
