@@ -43,13 +43,13 @@ function speakText(text, options = {}) {
     const voices = speechSynthesis.getVoices();
     console.log('🎤 Available voices:', voices.map(v => `${v.name} (${v.lang})`));
 
-    // Try to match 'Bells' voice name case-insensitively and ignore extra spaces
-    let selectedVoice = voices.find(v => v.name.replace(/\s+/g, '').toLowerCase() === 'bells' && v.lang === 'en-US');
+    // Try to match 'Google UK English Male' voice name case-insensitively and ignore extra spaces
+    let selectedVoice = voices.find(v => v.name.replace(/\s+/g, '').toLowerCase() === 'googleukenglishmale' && v.lang === 'en-GB');
     if (selectedVoice) {
         console.log(`🎯 Forced voice: ${selectedVoice.name} (${selectedVoice.lang})`);
         currentUtterance.voice = selectedVoice;
     } else {
-        console.log('⚠️ Bells (en-US) not found, using default voice');
+        console.log('⚠️ Google UK English Male (en-GB) not found, using default voice');
     }
     
     // Event handlers
