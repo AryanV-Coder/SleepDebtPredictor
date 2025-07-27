@@ -34,24 +34,46 @@ function speakText(text, options = {}) {
     // Create speech utterance
     currentUtterance = new SpeechSynthesisUtterance(text);
     
-    // Configure voice options for better Hinglish pronunciation
-    currentUtterance.rate = options.rate || 0.6;        // Much slower for better clarity and Indian pace
-    currentUtterance.pitch = options.pitch || 1.1;      // Slightly higher pitch
-    currentUtterance.volume = options.volume || 0.9;    // Higher volume
-    
-    // Get available voices and find the best one for Hinglish
+    // Configure voice options for better English pronunciation
+    currentUtterance.rate = options.rate || 0.85;        // Normal/medium speed for English
+    currentUtterance.pitch = options.pitch || 1.05;      // Slightly above normal
+    currentUtterance.volume = options.volume || 0.9;     // Higher volume
+
+    // Get available voices and find the best one for English
     const voices = speechSynthesis.getVoices();
     console.log('🎤 Available voices:', voices.map(v => `${v.name} (${v.lang})`));
-    
-    // Only Hindi voices for Hindi output
+
+    // Priority order for English output (Indian, British, then high-quality American voices)
     const voicePreferences = [
-        v => v.lang === 'hi-IN',
-        v => v.lang.includes('hi-IN'),
-        v => v.name.toLowerCase().includes('hindi') && v.lang.includes('hi-IN'),
-        v => v.name.toLowerCase().includes('kumar') && v.lang.includes('hi-IN'),
-        v => v.name.toLowerCase().includes('neerja') && v.lang.includes('hi-IN'),
-        v => v.name.toLowerCase().includes('heera') && v.lang.includes('hi-IN'),
-        v => v.name.toLowerCase().includes('hemant') && v.lang.includes('hi-IN')
+        // Indian English voices
+        v => v.lang === 'en-IN',
+        v => v.lang.includes('en-IN'),
+        v => v.name.toLowerCase().includes('ravi') && v.lang.includes('en-IN'),
+        v => v.name.toLowerCase().includes('priya') && v.lang.includes('en-IN'),
+        v => v.name.toLowerCase().includes('indian') && v.lang.includes('en-IN'),
+        v => v.name.toLowerCase().includes('veena') && v.lang.includes('en-IN'),
+        v => v.name.toLowerCase().includes('aditi') && v.lang.includes('en-IN'),
+        v => v.name.toLowerCase().includes('aria') && v.lang.includes('en-IN'),
+
+        // British English voices
+        v => v.lang === 'en-GB',
+        v => v.lang.includes('en-GB'),
+        v => v.name.toLowerCase().includes('daniel') && v.lang.includes('en-GB'),
+        v => v.name.toLowerCase().includes('british') && v.lang.includes('en'),
+        v => v.name.toLowerCase().includes('karen') && v.lang.includes('en-GB'),
+        v => v.name.toLowerCase().includes('susan') && v.lang.includes('en-GB'),
+        v => v.name.toLowerCase().includes('fiona') && v.lang.includes('en-GB'),
+
+        // High quality American voices
+        v => v.lang === 'en-US',
+        v => v.lang.includes('en-US'),
+        v => v.name.toLowerCase().includes('alex') && v.lang.includes('en-US'),
+        v => v.name.toLowerCase().includes('samantha') && v.lang.includes('en-US'),
+        v => v.name.toLowerCase().includes('victoria') && v.lang.includes('en-US'),
+
+        // Any English voice as fallback
+        v => v.lang.startsWith('en-'),
+        v => v.lang.includes('en')
     ];
     
     // Find the best available voice
