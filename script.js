@@ -43,28 +43,8 @@ function speakText(text, options = {}) {
     const voices = speechSynthesis.getVoices();
     console.log('🎤 Available voices:', voices.map(v => `${v.name} (${v.lang})`));
 
-    // Priority order for English output (Indian, British, then high-quality American voices)
+    // Only high-quality American English voices for output
     const voicePreferences = [
-        // Indian English voices
-        v => v.lang === 'en-IN',
-        v => v.lang.includes('en-IN'),
-        v => v.name.toLowerCase().includes('ravi') && v.lang.includes('en-IN'),
-        v => v.name.toLowerCase().includes('priya') && v.lang.includes('en-IN'),
-        v => v.name.toLowerCase().includes('indian') && v.lang.includes('en-IN'),
-        v => v.name.toLowerCase().includes('veena') && v.lang.includes('en-IN'),
-        v => v.name.toLowerCase().includes('aditi') && v.lang.includes('en-IN'),
-        v => v.name.toLowerCase().includes('aria') && v.lang.includes('en-IN'),
-
-        // British English voices
-        v => v.lang === 'en-GB',
-        v => v.lang.includes('en-GB'),
-        v => v.name.toLowerCase().includes('daniel') && v.lang.includes('en-GB'),
-        v => v.name.toLowerCase().includes('british') && v.lang.includes('en'),
-        v => v.name.toLowerCase().includes('karen') && v.lang.includes('en-GB'),
-        v => v.name.toLowerCase().includes('susan') && v.lang.includes('en-GB'),
-        v => v.name.toLowerCase().includes('fiona') && v.lang.includes('en-GB'),
-
-        // High quality American voices
         v => v.lang === 'en-US',
         v => v.lang.includes('en-US'),
         v => v.name.toLowerCase().includes('alex') && v.lang.includes('en-US'),
@@ -74,11 +54,7 @@ function speakText(text, options = {}) {
         v => v.name.toLowerCase().includes('jenny') && v.lang.includes('en-US'),
         v => v.name.toLowerCase().includes('guy') && v.lang.includes('en-US'),
         v => v.name.toLowerCase().includes('en-us-wavenet') && v.lang.includes('en-US'),
-        v => v.name.toLowerCase().includes('en-us-neural') && v.lang.includes('en-US'),
-
-        // Any English voice as fallback
-        v => v.lang.startsWith('en-'),
-        v => v.lang.includes('en')
+        v => v.name.toLowerCase().includes('en-us-neural') && v.lang.includes('en-US')
     ];
     
     // Find the best available voice

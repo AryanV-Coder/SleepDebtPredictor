@@ -49,7 +49,7 @@ async def analyse_sleep(video: UploadFile):
 
         save_to_google_sheet(ai_response)
         
-        response_text = f"You need to sleep {sleep_debt} hours more to achieve proper sleep health."
+        response_text = f"🎉 You need to sleep {sleep_debt} hours more to achieve proper sleep health."
         ai_message_response = ai_message(sleep_debt)
         eye_redness = f"Eye Redness : {ai_response['eye_redness']}"
         dark_circles = f"Dark Circles : {ai_response['dark_circles']}"
