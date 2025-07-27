@@ -34,25 +34,61 @@ function speakText(text, options = {}) {
     // Create speech utterance
     currentUtterance = new SpeechSynthesisUtterance(text);
     
-    // Configure voice options
-    currentUtterance.rate = options.rate || 0.9;        // Speed (0.1 to 10)
-    currentUtterance.pitch = options.pitch || 1;        // Pitch (0 to 2)
-    currentUtterance.volume = options.volume || 0.8;    // Volume (0 to 1)
+    // Configure voice options for better Hinglish pronunciation
+    currentUtterance.rate = options.rate || 0.8;        // Slower for better clarity
+    currentUtterance.pitch = options.pitch || 1.1;      // Slightly higher pitch
+    currentUtterance.volume = options.volume || 0.9;    // Higher volume
     
-    // Try to use a specific voice (optional)
+    // Get available voices and find the best one for Hinglish
     const voices = speechSynthesis.getVoices();
-    const preferredVoice = voices.find(voice => 
-        voice.name.includes('Alex') || 
-        voice.name.includes('Samantha') || 
-        voice.lang.includes('en-US')
-    );
-    if (preferredVoice) {
-        currentUtterance.voice = preferredVoice;
+    console.log('🎤 Available voices:', voices.map(v => `${v.name} (${v.lang})`));
+    
+    // Priority order for better Hinglish pronunciation
+    const voicePreferences = [
+        // Indian English voices (best for Hinglish)
+        v => v.name.toLowerCase().includes('ravi') && v.lang.includes('en-IN'),
+        v => v.name.toLowerCase().includes('indian') && v.lang.includes('en'),
+        v => v.lang === 'en-IN',
+        
+        // British English voices (better than American for Indian accent)
+        v => v.name.toLowerCase().includes('daniel') && v.lang.includes('en-GB'),
+        v => v.name.toLowerCase().includes('british') && v.lang.includes('en'),
+        v => v.lang === 'en-GB',
+        
+        // High quality American voices
+        v => v.name.toLowerCase().includes('alex'),
+        v => v.name.toLowerCase().includes('samantha'),
+        v => v.name.toLowerCase().includes('victoria'),
+        
+        // Female voices (often clearer)
+        v => v.name.toLowerCase().includes('karen'),
+        v => v.name.toLowerCase().includes('susan'),
+        v => v.name.toLowerCase().includes('fiona'),
+        
+        // Any English voice as fallback
+        v => v.lang.startsWith('en-'),
+        v => v.lang.includes('en')
+    ];
+    
+    // Find the best available voice
+    let selectedVoice = null;
+    for (const preference of voicePreferences) {
+        selectedVoice = voices.find(preference);
+        if (selectedVoice) {
+            console.log(`🎯 Selected voice: ${selectedVoice.name} (${selectedVoice.lang})`);
+            break;
+        }
+    }
+    
+    if (selectedVoice) {
+        currentUtterance.voice = selectedVoice;
+    } else {
+        console.log('⚠️ Using default voice');
     }
     
     // Event handlers
     currentUtterance.onstart = () => {
-        console.log('🎵 Speech started');
+        console.log('🎵 Speech started with voice:', currentUtterance.voice?.name || 'default');
     };
     
     currentUtterance.onend = () => {
@@ -75,9 +111,35 @@ function stopAudio() {
     }
 }
 
+// Function to test different voices (for debugging)
+function testVoice(voiceName = null) {
+    const testText = "Arre yaar, tu toh bohot tired lag raha hai! 😴";
+    const voices = speechSynthesis.getVoices();
+    
+    if (voiceName) {
+        const voice = voices.find(v => v.name.toLowerCase().includes(voiceName.toLowerCase()));
+        if (voice) {
+            console.log(`🎤 Testing voice: ${voice.name}`);
+            speakText(testText, { voice: voice });
+        } else {
+            console.log(`❌ Voice not found: ${voiceName}`);
+        }
+    } else {
+        // Test with current best voice
+        speakText(testText);
+    }
+}
+
+// Add this to window for manual testing in console
+window.testVoice = testVoice;
+
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🔄 Page loaded - initializing...');
+    
+    // Initialize voices (important for voice selection)
+    initializeVoices();
+    
     if (checkRequiredElements()) {
         // ✅ Don't initialize camera on page load - only when Start is pressed
         setupEventListeners();
@@ -90,6 +152,42 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('❌ Required HTML elements not found');
     }
 });
+
+// Initialize and load voices
+function initializeVoices() {
+    // Load voices immediately if available
+    if (speechSynthesis.getVoices().length > 0) {
+        console.log('🎤 Voices already loaded');
+        logAvailableVoices();
+    } else {
+        // Wait for voices to load
+        speechSynthesis.addEventListener('voiceschanged', function() {
+            console.log('🎤 Voices loaded');
+            logAvailableVoices();
+        });
+    }
+}
+
+// Log available voices for debugging
+function logAvailableVoices() {
+    const voices = speechSynthesis.getVoices();
+    console.log('🎤 Available voices for Hinglish:');
+    
+    // Filter and show relevant voices
+    const relevantVoices = voices.filter(v => 
+        v.lang.includes('en-IN') || 
+        v.lang.includes('en-GB') || 
+        v.lang.includes('en-US') ||
+        v.name.toLowerCase().includes('alex') ||
+        v.name.toLowerCase().includes('samantha') ||
+        v.name.toLowerCase().includes('daniel') ||
+        v.name.toLowerCase().includes('ravi')
+    );
+    
+    relevantVoices.forEach(voice => {
+        console.log(`  • ${voice.name} (${voice.lang}) - ${voice.localService ? 'Local' : 'Remote'}`);
+    });
+}
 
 // Check if all required elements exist
 function checkRequiredElements() {
