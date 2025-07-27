@@ -35,20 +35,20 @@ function speakText(text, options = {}) {
     currentUtterance = new SpeechSynthesisUtterance(text);
     
     // Configure voice options for better English pronunciation
-    currentUtterance.rate = options.rate || 2.0;        // Much faster for English
-    currentUtterance.pitch = options.pitch || 2.0;      // Slightly above normal
+    currentUtterance.rate = options.rate || 1.3;        // Much faster for English
+    currentUtterance.pitch = options.pitch || 1.3;      // Slightly above normal
     currentUtterance.volume = options.volume || 0.9;     // Higher volume
 
-    // Get available voices and force 'Albert (en-US)' if available
+    // Get available voices and force 'Good News (en-US)' if available
     const voices = speechSynthesis.getVoices();
     console.log('🎤 Available voices:', voices.map(v => `${v.name} (${v.lang})`));
 
-    let selectedVoice = voices.find(v => v.name.toLowerCase() === 'albert' && v.lang === 'en-US');
+    let selectedVoice = voices.find(v => v.name.toLowerCase() === 'good news' && v.lang === 'en-US');
     if (selectedVoice) {
         console.log(`🎯 Forced voice: ${selectedVoice.name} (${selectedVoice.lang})`);
         currentUtterance.voice = selectedVoice;
     } else {
-        console.log('⚠️ Albert (en-US) not found, using default voice');
+        console.log('⚠️ Good News (en-US) not found, using default voice');
     }
     
     // Event handlers

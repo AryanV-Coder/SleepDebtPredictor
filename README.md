@@ -8,6 +8,7 @@ A web application that analyzes sleep debt using facial features detection and A
 - Facial landmark detection using dlib
 - Blink and yawn detection
 - AI-powered sleep debt analysis using Google Gemini
+- Text-to-Speech (TTS) feedback in browser using Web Speech API
 - Google Sheets integration for data storage
 
 ## Local Development
@@ -129,10 +130,16 @@ The application uses the dlib 68-point facial landmark predictor:
 - `POST /analyze-sleep`: Upload video for sleep debt analysis
 - Returns JSON with sleep debt analysis results
 
+## Text-to-Speech (TTS) Details
+
+- The web app uses the browser's Web Speech API for TTS feedback.
+- TTS speed and pitch are set high for clarity and energy.
+- You can test available voices in the browser console using `testVoice('VoiceName')`.
+
 ## Technologies Used
 
 - **Backend**: FastAPI, Python
-- **Frontend**: HTML, CSS, JavaScript
+- **Frontend**: HTML, CSS, JavaScript (with Web Speech API for TTS)
 - **AI**: Google Gemini API
 - **Computer Vision**: OpenCV, dlib
 - **Storage**: Google Sheets API
