@@ -172,7 +172,7 @@ def ai_message(sleep_debt):
     - "Wow! You slept well, looking super fresh!"
     - "Dude, 6 hours? You're basically a walking zombie now!"
 
-    Give me ONLY the English comment for this sleep debt, nothing else. Be as creative as possible. You are not restricted to the examples I provided above."""
+    Give me ONLY the English comment for this sleep debt, nothing else. Be as creative as possible. Use the examples provided above to create more such examples."""
 
     prompt = f"A person needs {sleep_debt} hours of additional sleep. Give me a funny Hinglish comment about this."
     
