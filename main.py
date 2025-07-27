@@ -5,6 +5,7 @@ from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware
 from ai_analysis import ai_analysis
 from google_sheets import save_to_google_sheet
+from model_training.model import predict_sleep_debt
 
 app = FastAPI()
 
@@ -38,13 +39,18 @@ async def analyse_sleep(video: UploadFile):
             encoded_video = base64.b64encode(file.read()).decode('utf-8')
         
         ai_response = ai_analysis(encoded_video)
-        save_to_google_sheet(ai_response)
+        print(f"AI Response before model prediction: {ai_response}")
 
-        # Your ML processing code here...
+        sleep_debt = predict_sleep_debt(eye_redness = ai_response['eye_redness'],dark_circles = ai_response['dark_circles'],yawn_count = ai_response['yawn_count'])
+        print(f"Sleep Debt by Our Model : {sleep_debt}")
+
+        ai_response['sleep_debt'] = sleep_debt
+        print(f"AI Response after model prediction: {ai_response}")
+
+        save_to_google_sheet(ai_response)
         
-        # Return successful response
         response = {
-            'sleep_debt': 'Thank You for your input in training this model 😊',  # Your ML result here
+            'sleep_debt': sleep_debt, 
         }
         
         return response

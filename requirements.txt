@@ -7,4 +7,8 @@ oauth2client
 # dlib
 # opencv-python
 numpy
+pandas
+seaborn
 python-multipart
+scikit-learn
+matplotlib

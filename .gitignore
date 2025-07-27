@@ -12,7 +12,6 @@ uploaded_videos/
 # Large Model Files
 *.dat
 *.model
-*.pkl
 *.joblib
 shape_predictor_68_face_landmarks.dat
 
