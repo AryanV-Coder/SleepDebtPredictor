@@ -39,38 +39,16 @@ function speakText(text, options = {}) {
     currentUtterance.pitch = options.pitch || 2.0;      // Slightly above normal
     currentUtterance.volume = options.volume || 0.9;     // Higher volume
 
-    // Get available voices and find the best one for English
+    // Get available voices and force 'Albert (en-US)' if available
     const voices = speechSynthesis.getVoices();
     console.log('🎤 Available voices:', voices.map(v => `${v.name} (${v.lang})`));
 
-    // Only high-quality American English voices for output
-    const voicePreferences = [
-        v => v.lang === 'en-US',
-        v => v.lang.includes('en-US'),
-        v => v.name.toLowerCase().includes('alex') && v.lang.includes('en-US'),
-        v => v.name.toLowerCase().includes('samantha') && v.lang.includes('en-US'),
-        v => v.name.toLowerCase().includes('victoria') && v.lang.includes('en-US'),
-        v => v.name.toLowerCase().includes('google us english') && v.lang.includes('en-US'),
-        v => v.name.toLowerCase().includes('jenny') && v.lang.includes('en-US'),
-        v => v.name.toLowerCase().includes('guy') && v.lang.includes('en-US'),
-        v => v.name.toLowerCase().includes('en-us-wavenet') && v.lang.includes('en-US'),
-        v => v.name.toLowerCase().includes('en-us-neural') && v.lang.includes('en-US')
-    ];
-    
-    // Find the best available voice
-    let selectedVoice = null;
-    for (const preference of voicePreferences) {
-        selectedVoice = voices.find(preference);
-        if (selectedVoice) {
-            console.log(`🎯 Selected voice: ${selectedVoice.name} (${selectedVoice.lang})`);
-            break;
-        }
-    }
-    
+    let selectedVoice = voices.find(v => v.name.toLowerCase() === 'albert' && v.lang === 'en-US');
     if (selectedVoice) {
+        console.log(`🎯 Forced voice: ${selectedVoice.name} (${selectedVoice.lang})`);
         currentUtterance.voice = selectedVoice;
     } else {
-        console.log('⚠️ Using default voice');
+        console.log('⚠️ Albert (en-US) not found, using default voice');
     }
     
     // Event handlers
