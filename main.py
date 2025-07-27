@@ -51,11 +51,15 @@ async def analyse_sleep(video: UploadFile):
         
         response_text = f"You need to sleep {sleep_debt} hours more to achieve proper sleep health."
         ai_message = ai_response(sleep_debt)
+        eye_redness = f"Eye Redness : {ai_response['eye_redness']}"
+        dark_circles = f"Dark Circles : {ai_response['dark_circles']}"
+        yawn_count = f"Yawn Count : {ai_response['yawn_count']}"
+
 
         response = {
-            "eye_redness": f"Eye Redness : {ai_response['eye_redness']}",
-            "dark_circles": f"Dark Circles : {ai_response['dark_circles']}",
-            "yawn_count": f"Yawn Count : {ai_response['yawn_count']}",
+            "eye_redness": eye_redness,
+            "dark_circles": dark_circles,
+            "yawn_count": yawn_count,
             "sleep_debt": response_text,
             "message" : ai_message
         }
