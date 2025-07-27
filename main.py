@@ -3,7 +3,7 @@ import os
 import base64
 from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware
-from ai_analysis import ai_analysis, ai_response
+from ai_analysis import ai_analysis, ai_message
 from google_sheets import save_to_google_sheet
 from model_training.model import predict_sleep_debt
 
@@ -50,7 +50,7 @@ async def analyse_sleep(video: UploadFile):
         save_to_google_sheet(ai_response)
         
         response_text = f"You need to sleep {sleep_debt} hours more to achieve proper sleep health."
-        ai_message = ai_response(sleep_debt)
+        ai_message = ai_analysis.ai_message(sleep_debt)
         eye_redness = f"Eye Redness : {ai_response['eye_redness']}"
         dark_circles = f"Dark Circles : {ai_response['dark_circles']}"
         yawn_count = f"Yawn Count : {ai_response['yawn_count']}"

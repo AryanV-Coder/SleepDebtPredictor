@@ -149,7 +149,7 @@ def parse_json_response(response_text):
                 "sleep_debt": 0,
             }
         
-def ai_response(sleep_debt):
+def ai_message(sleep_debt):
     system_prompt = """You are a witty Hinglish commentator who creates funny, relatable responses about sleep debt. 
 
     Rules:
