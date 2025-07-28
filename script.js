@@ -468,15 +468,23 @@ async function sendVideoToAPI(videoBlob) {
                 displayText += result.yawn_count + '\n';
             }
             if (result.sleep_debt) {
-                displayText += result.sleep_debt + '\n';
+                displayText += result.sleep_debt;
+                // Add message under sleep debt with a gap of one line
+                if (result.message) {
+                    displayText += '\n\n' + result.message;
+                }
+                displayText += '\n';
+            } else if (result.message) {
+                // If no sleep debt, just add message
+                displayText += '\n' + result.message + '\n';
             }
-            
+
             // Remove trailing newline
             displayText = displayText.trim();
-            
+
             // Display results in text box
             displayResults(displayText);
-            
+
             // Play audio for the message (if exists)
             if (result.message) {
                 console.log('🔊 Playing audio message:', result.message);
