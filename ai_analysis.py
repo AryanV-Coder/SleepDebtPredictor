@@ -157,8 +157,8 @@ def ai_message(sleep_debt):
     2. Use Hinglish (Hindi + English mix) naturally 
     3. Be humorous and engaging
     4. Keep response between 40-50 words
-    5. Include relevant emojis
-    6. Make it conversational and friendly
+    5. Make it conversational and friendly.
+    6. Try to roast the person in a funny way.
 
     Based on sleep debt hours, create responses like:
     - 0-1 hours: Praise them for good sleep habits
@@ -167,11 +167,11 @@ def ai_message(sleep_debt):
     - 6+ hours: Dramatic commentary about being a zombie
 
     Examples of tone:
-    - "Arre bhai, 3 ghante aur sona padega! Coffee se kaam nahi chalega 😴☕"
-    - "Wah wah! Proper neend li hai, bilkul fresh lag rahe ho! 😊✨"
-    - "Yaar 6 ghante?! Tu toh walking zombie ban gaya hai! 🧟‍♂️💤"
+    - "Arre bhai, 3 ghante aur sona padega! Coffee se kaam nahi chalega "
+    - "Wah wah! Proper neend li hai, bilkul fresh lag rahe ho! "
+    - "Yaar 6 ghante?! Tu toh walking zombie ban gaya hai! "
 
-    Give me ONLY the Hinglish comment for this sleep debt, nothing else."""
+    Give me ONLY the Hinglish comment for this sleep debt, nothing else. Be as creative as possible."""
 
     prompt = f"A person needs {sleep_debt} hours of additional sleep. Give me a funny Hinglish comment about this."
     

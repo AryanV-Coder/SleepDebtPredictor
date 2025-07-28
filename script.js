@@ -468,15 +468,7 @@ async function sendVideoToAPI(videoBlob) {
                 displayText += result.yawn_count + '\n';
             }
             if (result.sleep_debt) {
-                displayText += result.sleep_debt;
-                // Add message under sleep debt with a gap of one line
-                if (result.message) {
-                    displayText += '\n\n' + result.message;
-                }
-                displayText += '\n';
-            } else if (result.message) {
-                // If no sleep debt, just add message
-                displayText += '\n' + result.message + '\n';
+                displayText += result.sleep_debt + '\n';
             }
 
             // Remove trailing newline
@@ -485,18 +477,84 @@ async function sendVideoToAPI(videoBlob) {
             // Display results in text box
             displayResults(displayText);
 
-            // Play audio for the message (if exists)
+            // Show AI Comment popup if message exists
             if (result.message) {
-                console.log('🔊 Playing audio message:', result.message);
-                // Small delay to ensure display is complete before audio
+                showAIPopup(result.message);
+                // Play audio for the message (if exists)
                 setTimeout(() => {
                     speakText(result.message, {
-                        rate: 0.6,        // Slower rate for Indian accent
+                        rate: 0.6,
                         pitch: 1,
                         volume: 0.8
                     });
                 }, 500);
             }
+// Show AI Comment popup
+function showAIPopup(message) {
+    // Remove any existing popup
+    const oldPopup = document.getElementById('aiCommentPopup');
+    if (oldPopup) oldPopup.remove();
+
+    // Create popup container
+    const popup = document.createElement('div');
+    popup.id = 'aiCommentPopup';
+    popup.style.position = 'fixed';
+    popup.style.top = '50%';
+    popup.style.left = '50%';
+    popup.style.transform = 'translate(-50%, -50%)';
+    popup.style.zIndex = '9999';
+    popup.style.background = 'rgba(255,255,255,0.98)';
+    popup.style.boxShadow = '0 4px 24px rgba(0,0,0,0.18)';
+    popup.style.borderRadius = '16px';
+    popup.style.padding = '32px 24px 24px 24px';
+    popup.style.maxWidth = '90vw';
+    popup.style.width = '400px';
+    popup.style.textAlign = 'center';
+    popup.style.fontFamily = 'inherit';
+    popup.style.color = '#222';
+    popup.style.display = 'flex';
+    popup.style.flexDirection = 'column';
+    popup.style.alignItems = 'center';
+
+    // Responsive for mobile
+    popup.style.boxSizing = 'border-box';
+    popup.style.minWidth = '260px';
+    popup.style.maxHeight = '80vh';
+    popup.style.overflowY = 'auto';
+
+    // Title
+    const title = document.createElement('div');
+    title.textContent = 'AI Comment';
+    title.style.fontWeight = 'bold';
+    title.style.fontSize = '1.3em';
+    title.style.marginBottom = '18px';
+    popup.appendChild(title);
+
+    // Message
+    const msg = document.createElement('div');
+    msg.textContent = message;
+    msg.style.fontSize = '1.08em';
+    msg.style.marginBottom = '18px';
+    popup.appendChild(msg);
+
+    // Close button
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '✕';
+    closeBtn.style.position = 'absolute';
+    closeBtn.style.top = '12px';
+    closeBtn.style.right = '18px';
+    closeBtn.style.background = 'transparent';
+    closeBtn.style.border = 'none';
+    closeBtn.style.fontSize = '1.3em';
+    closeBtn.style.cursor = 'pointer';
+    closeBtn.style.color = '#888';
+    closeBtn.setAttribute('aria-label', 'Close');
+    closeBtn.onclick = () => popup.remove();
+    popup.appendChild(closeBtn);
+
+    // Add to body
+    document.body.appendChild(popup);
+}
             
             // Only enable start button - NO OTHER CHANGES
             if (startBtn) {
