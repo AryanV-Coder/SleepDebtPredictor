@@ -2,6 +2,10 @@
 
 A web application that analyzes sleep debt using facial features detection and AI analysis.
 
+## 🔗 Live Demo
+
+Check out the live application: [https://sleep-debt-predictor.vercel.app/](https://sleep-debt-predictor.vercel.app/)
+
 ## Features
 
 - Real-time video recording using webcam
