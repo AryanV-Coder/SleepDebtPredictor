@@ -6,11 +6,11 @@ Check out the live application: [https://sleep-debt-predictor.vercel.app/](https
 
 ## Description
 
-SpyAI is a web-based system designed to estimate how many additional hours of sleep a person may require to recover from accumulated sleep debt. The application uses a Linear Regression model trained on fatigue-related visual indicators, making the prediction process simple, explainable, and reliable for everyday use.
+Sleep Debt Predictor is a web-based system designed to estimate how many additional hours of sleep a person may require to recover from accumulated sleep debt. The application uses a Linear Regression model trained on fatigue-related visual indicators, making the prediction process simple, explainable, and reliable for everyday use.
 
 The system captures a short video through the browser and sends it to Google Gemini, which analyzes the user’s facial condition to extract three key features: eye redness level, dark-circle intensity, and yawn count. These indicators serve as measurable proxies for tiredness and are fed into the regression model to generate a clear, hour-based sleep requirement estimate.
 
-The backend is built using FastAPI, providing a lightweight and efficient API layer, while the frontend uses HTML, CSS, and JavaScript for an intuitive user experience. The integration of AI-powered feature extraction with a classical machine learning model allows SpyAI to deliver practical and easy-to-understand insights that can help users monitor their rest patterns and make more informed decisions about their daily routine.
+The backend is built using FastAPI, providing a lightweight and efficient API layer, while the frontend uses HTML, CSS, and JavaScript for an intuitive user experience. The integration of AI-powered feature extraction with a classical machine learning model allows Sleep Debt Predictor to deliver practical and easy-to-understand insights that can help users monitor their rest patterns and make more informed decisions about their daily routine.
 
 ## Local Development
 
