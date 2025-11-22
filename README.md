@@ -1,4 +1,4 @@
-# Sleep Debt Predictor
+# 😴 Sleep Debt Predictor
 
 ## 🔗 Live Demo
 
